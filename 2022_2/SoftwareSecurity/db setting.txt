@@ -1,0 +1,17 @@
+1. $apt-get install mysql-server
+setting root password: 1111 
+
+2. $apt-get install mysql-client
+
+3. $apt-get install libmysql++-dev
+
+4. $mysql -u root -p
+
+5. CREATE DATABASE Wiki;
+
+6. exit
+
+7. mysql -u root -p Wiki < base.sql
+complie시:
+gcc (실행파일) (c파일) -I/usr/include/mysql -lmysqlclient -L/usr/lib 
+ 
