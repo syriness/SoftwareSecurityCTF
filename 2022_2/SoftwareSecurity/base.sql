@@ -26,7 +26,7 @@ CREATE TABLE `Users` (
   `id` char(100) DEFAULT NULL,
   `password` char(100) DEFAULT NULL,
   `phone` char(15) DEFAULT NULL,
-  'super' int(11) DEFAULT NULL
+  `super` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -36,7 +36,7 @@ CREATE TABLE `Users` (
 
 LOCK TABLES `Users` WRITE;
 /*!40000 ALTER TABLE `Users` DISABLE KEYS */;
-INSERT INTO `Users` VALUES ('super','super','000-0000-0000', 1),('man','qwerty','111-1111-1111', 0),('woman','asdfgh','222-2222-2222', 0)
+INSERT INTO `Users` VALUES ('super','super','000-0000-0000', 1),('man','qwerty','111-1111-1111', 0),('woman','asdfgh','222-2222-2222', 0);
 /*!40000 ALTER TABLE `Users` ENABLE KEYS */;
 UNLOCK TABLES;
 
