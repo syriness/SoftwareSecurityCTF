@@ -32,7 +32,7 @@ int main(int argc, char** argv) {
 	}
 
 	//connect to database
-	if (mysql_real_connect(conn, "localhost", "root", "PSV42011G", "Wiki", 0, NULL, 0) == NULL) {
+	if (mysql_real_connect(conn, "localhost", "root", "1111", "Wiki", 0, NULL, 0) == NULL) {
 		printf("Connection Failed");
 		return 0;
 	}
