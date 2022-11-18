@@ -13,6 +13,7 @@ int main (int argc, char **argv) {
   char buffer[20];
   MYSQL_ROW row;
   MYSQL *conn = mysql_init(NULL);
+  const char special[] = "!@#$%^&*(){}:;<>',.-";
   char *ret;
   
   //connect to database
@@ -20,6 +21,12 @@ int main (int argc, char **argv) {
 	return 0;
   }
   // construct query
+  for(int i = 1; i<argc; i++) {
+  	ret = strpbrk(argv[i], special);
+  	if(ret) {
+		return 12;
+	}
+  }
   commandCheck = snprintf(command, sizeof command, "SELECT * FROM Users WHERE BINARY id = \'%s\' AND BINARY password = \'%s\';", argv[1], argv[2]);
   
   if(mysql_real_query(conn, command, 250) != 0) { //check information
