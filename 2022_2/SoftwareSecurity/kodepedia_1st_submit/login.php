@@ -18,6 +18,8 @@ session_start();
   if($_SERVER["REQUEST_METHOD"] == "POST") {
     $login = $_POST['username'];
     $pass = $_POST['password'];
+    $login = preg_replace('/[^A-Za-z0-9 ]/', '', $login);
+    $pass = preg_replace('/[^A-Za-z0-9 ]/', '', $pass);
     
     //construct command which will be passed to exec
     $argument = "./login '{$login}' '{$pass}'";
