@@ -15,6 +15,8 @@
   <?php
   $retval = 0;
     //construct command which will be passed to exec
+  $color = preg_replace('/[^A-Za-z0-9 ]/', '', $color);
+  $sport = preg_replace('/[^A-Za-z0-9 ]/', '', $sport);
   $argument = "./DocumentEdit '{$color}' '{$sport}'";
     
     // call login.c with entered id and password
