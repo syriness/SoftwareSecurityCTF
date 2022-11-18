@@ -14,6 +14,7 @@
   <?php
     //construct command which will be passed to exec
   $retval = 0;
+  $search = preg_replace('/[^A-Za-z0-9 ]/', '', $search);
   $argument = "./search2 '{$search}'";
     
     // call login.c with entered id and password
