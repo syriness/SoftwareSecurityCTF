@@ -11,7 +11,9 @@ int main(int argc, char** argv) {
     MYSQL_ROW row;
     MYSQL* conn = mysql_init(NULL);
     char* ret;
-
+    const char special[] = "!@#$%^&*(){}:;<>',.-";
+    char *ret2;
+	
     //connect to database
     if (mysql_real_connect(conn, "localhost", "root", "1111", "Wiki", 0, NULL, 0) == NULL) {
         printf("Connection Failed\n");
@@ -30,6 +32,13 @@ int main(int argc, char** argv) {
 	z++;
     } 
     // construct query
+	
+    for(int i = 1; i<argc; i++) {
+    	ret2 = strpbrk(argv[i], special);
+    	if(ret2) {
+		return 0;
+  	}
+    }
     commandCheck = snprintf(command, sizeof command, "SELECT description FROM Information WHERE word = \'%s\';", temp);
 
     if (mysql_real_query(conn, command, 250) != 0) { //check information
