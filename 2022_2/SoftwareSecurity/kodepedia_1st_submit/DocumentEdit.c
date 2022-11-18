@@ -18,6 +18,9 @@ int main(int argc, char** argv) {
 	char wikiDescription[MAX_LEN];
 	MYSQL_ROW row;
 	MYSQL* conn = mysql_init(NULL);
+	const char special[] = "!@#$%^&*(){}:;<>',.-";
+	char *ret;
+	
 	int isNewKeyword = 0;
 
 	if (argc != 3){
@@ -39,7 +42,13 @@ int main(int argc, char** argv) {
 		return 0;
 	}
 
-	//create tempfile with keyword and concat descriptions in tempfile	
+	 for(int i = 1; i<argc; i++) {
+  		ret = strpbrk(argv[i], special);
+  		if(ret) {
+			return 0;
+		}
+	}
+	
 	commandCheck = snprintf(command, sizeof command, "SELECT * FROM Information WHERE word=\'%s\';",wikiKeyword);
 	if (mysql_real_query(conn, command, 250) != 0) {
 		printf("query failed\n");
