@@ -14,8 +14,6 @@ int main(int argc, char** argv) {
 	//FILE* fp;
 	char command[256];
 	int commandCheck;
-	char wikiKeyword[MAX_LEN];
-	char wikiDescription[MAX_LEN];
 	MYSQL_ROW row;
 	MYSQL* conn = mysql_init(NULL);
 	const char special[] = "!@#$%^&*(){}:;<>',.-";
@@ -28,12 +26,7 @@ int main(int argc, char** argv) {
 		return 0;
 	}
 	else if(argc == 3){
-		strcpy(wikiKeyword, argv[1]);
-		strcpy(wikiDescription, argv[2]);
-		printf("\nTO FIND wiki Keyword : ");
-		printf(argv[1]);
-		printf("TO ADD wiki Description : ");
-		printf(argv[2]);
+		printf("\nStarting Mysql connecting : ");
 	}
 
 	//connect to database
@@ -49,51 +42,36 @@ int main(int argc, char** argv) {
 		}
 	}
 	
-	commandCheck = snprintf(command, sizeof command, "SELECT * FROM Information WHERE word=\'%s\';",wikiKeyword);
+	commandCheck = snprintf(command, sizeof command, "SELECT * FROM Information WHERE word=\'%s\';", argv[1]);
 	if (mysql_real_query(conn, command, 250) != 0) {
 		printf("query failed\n");
 	}
 	else {
 		MYSQL_RES* result = mysql_store_result(conn);
 		int resnum = mysql_num_rows(result);
-		//fp = fopen(wikiKeyword, "w");
 		if(resnum == 1){
 			printf("**Existing Keyword**\n");
-			/*while(row = mysql_fetch_row(result)){
-				fprintf(fp, "%s\n", row[1]);
-			}*/
 			isNewKeyword = 0;
 		}
 		else if(resnum == 0) {
 			printf("**New Keyword**\n");
 			isNewKeyword = 1;
 		}
-		//fprintf(fp, "%s", argv[2]);
-		//fclose(fp);
-		//fprintf(stdout, "**File Wrote**\n");
 	}
 
 	//insert record into database with tempfile
-	//fp = fopen(wikiKeyword, "r");
 	char descriptionStr[MAX_LEN];
 	char* content = "";
-	/*while(fgets(descriptionStr,MAX_LEN,fp)){
-		content = concat(content, descriptionStr);
-	}*/
 
-	//printf(content);
 	if(isNewKeyword == 1){
-		commandCheck = snprintf(command, sizeof command, "INSERT INTO Information VALUES (\'%s\', \'%s\');", wikiKeyword, wikiDescription);
+		commandCheck = snprintf(command, sizeof command, "INSERT INTO Information VALUES (\'%s\', \'%s\');", argv[1], argv[2]);
 		mysql_real_query(conn, command, 250);
 	}
 	else if(isNewKeyword == 0){
-		commandCheck = snprintf(command, sizeof command, "UPDATE Information SET description=\'%s\' WHERE word=\'%s\';", wikiDescription, wikiKeyword);
+		commandCheck = snprintf(command, sizeof command, "UPDATE Information SET description=\'%s\' WHERE word=\'%s\';", argv[2], argv[1]);
 		mysql_real_query(conn, command, 250);
 	}
 	fprintf(stdout, "\n**Database Wrote**\n");
-	//fclose(fp);
-
-	//delete tempfile
 
 	return 0;
 }
